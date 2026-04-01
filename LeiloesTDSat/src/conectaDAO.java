@@ -27,6 +27,7 @@ public class conectaDAO {
                     "root",
                     "0702234M$?!%%"
                 );
+        	
             
         } catch (SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
