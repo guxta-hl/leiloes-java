@@ -1,5 +1,7 @@
 
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -40,8 +42,8 @@ public class listagemVIEW extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         btnVendas = new javax.swing.JButton();
         btnVoltar = new javax.swing.JButton();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         listaProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -172,22 +174,21 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void listarProdutos(){
         try {
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            
-            DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-            model.setNumRows(0);
-            
-            ArrayList<ProdutosDTO> listagem = produtosdao.listarProdutos();
-            
-            for(int i = 0; i < listagem.size(); i++){
-                model.addRow(new Object[]{
-                    listagem.get(i).getId(),
-                    listagem.get(i).getNome(),
-                    listagem.get(i).getValor(),
-                    listagem.get(i).getStatus()
+            ProdutosDAO dao = new ProdutosDAO();
+
+            DefaultTableModel modelo = (DefaultTableModel) listaProdutos.getModel();
+            modelo.setRowCount(0);
+
+            for (ProdutosDTO p : dao.listarProdutos()) {
+                modelo.addRow(new Object[]{
+                    p.getId(),
+                    p.getNome(),
+                    p.getValor(),
+                    p.getStatus()
                 });
             }
         } catch (Exception e) {
+        	JOptionPane.showInternalMessageDialog(null, "Erro ao listar!");
         }
     
     }
